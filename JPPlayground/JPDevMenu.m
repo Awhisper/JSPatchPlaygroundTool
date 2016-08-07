@@ -127,7 +127,9 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
     
     
     [items addObject:[JPDevMenuItem buttonItemWithTitle:@"Reload Command+R" handler:^{
-//        [self reload];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:)]) {
+            [self.delegate devMenuDidAction:JPDevMenuActionReload];
+        }
     }]];
     
     [items addObject:[JPDevMenuItem buttonItemWithTitle:@"Hide ErrorView Command+H" handler:^{
@@ -189,6 +191,38 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
     _actionSheet = actionSheet;
     _presentedItems = items;
 }
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    _actionSheet = nil;
+    if (buttonIndex == actionSheet.cancelButtonIndex) {
+        return;
+    }
+    
+    JPDevMenuItem *item = _presentedItems[buttonIndex];
+    switch (item.type) {
+        case JPDevMenuTypeButton: {
+            [item callHandler];
+            break;
+        }
+        case JPDevMenuTypeToggle: {
+//            BOOL value = [_settings[item.key] boolValue];
+//            [self updateSetting:item.key value:@(!value)]; // will call handler
+            break;
+        }
+    }
+    return;
+}
+
+
+-(void)actionSheetCancel:(UIActionSheet *)actionSheet
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:)]) {
+        [self.delegate devMenuDidAction:JPDevMenuActionCancel];
+    }
+}
+
 
 
 @end

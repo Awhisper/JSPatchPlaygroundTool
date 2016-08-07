@@ -6,11 +6,11 @@
 //  Copyright © 2016年 baidu. All rights reserved.
 //
 
-#import "JPErrorView.h"
+#import "JPDevErrorView.h"
 
 
 
-@implementation JPErrorView
+@implementation JPDevErrorView
 
 - (instancetype)initError:(NSString *)errMsg
 {

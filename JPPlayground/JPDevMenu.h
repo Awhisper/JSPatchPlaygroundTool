@@ -8,6 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum : NSUInteger {
+    JPDevMenuActionReload = 0,
+    JPDevMenuActionAutoReload,
+    JPDevMenuActionOpenJS,
+    JPDevMenuActionCancel
+} JPDevMenuAction;
+
+@protocol JPDevMenuDelegate <NSObject>
+
+-(void)devMenuDidAction:(JPDevMenuAction)action;
+
+@end
+
 @interface JPDevMenu : NSObject
+
+@property (nonatomic,weak) id<JPDevMenuDelegate> delegate;
 - (void)toggle;
 @end

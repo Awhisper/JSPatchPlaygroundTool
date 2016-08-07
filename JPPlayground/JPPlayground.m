@@ -9,10 +9,11 @@
 #import "JPPlayground.h"
 #import "JPKeyCommands.h"
 #import "JPCleaner.h"
-#import "JPErrorView.h"
+#import "JPDevErrorView.h"
 #import "JPDevMenu.h"
+#import "JPDevTipView.h"
 
-@interface JPPlayground ()<UIActionSheetDelegate>
+@interface JPPlayground ()<UIActionSheetDelegate,JPDevMenuDelegate>
 
 @property (nonatomic,strong) NSString *rootPath;
 
@@ -46,6 +47,7 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     if ((self = [super init])) {
         _keyManager = [JPKeyCommands sharedInstance];
         _devMenu = [[JPDevMenu alloc]init];
+        _devMenu.delegate = self;
     }
     return self;
 }
@@ -65,7 +67,7 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     self.rootPath = path;
     
     [JPEngine handleException:^(NSString *msg) {
-        JPErrorView *errV = [[JPErrorView alloc]initError:msg];
+        JPDevErrorView *errV = [[JPDevErrorView alloc]initError:msg];
         [[UIApplication sharedApplication].keyWindow addSubview:errV];
         self.errorView = errV;
         [self.devMenu toggle];
@@ -95,6 +97,7 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
 
 -(void)reload
 {
+    [JPDevTipView showJPDevTip:@"JSPatch Reloading ..."];
     [self hideErrorView];
     [JPCleaner cleanAll];
     NSString *script = [NSString stringWithContentsOfFile:self.rootPath encoding:NSUTF8StringEncoding error:nil];
@@ -115,4 +118,29 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     self.errorView = nil;
 }
 
+-(void)devMenuDidAction:(JPDevMenuAction)action
+{
+    switch (action) {
+        case JPDevMenuActionReload:{
+            [self reload];
+            break;
+        }
+        case JPDevMenuActionAutoReload:{
+            [self reload];
+            break;
+        }
+        case JPDevMenuActionOpenJS:{
+            [self reload];
+            break;
+        }
+        case JPDevMenuActionCancel:{
+            
+            break;
+        }
+            
+            
+        default:
+            break;
+    }
+}
 @end

@@ -48,9 +48,10 @@
 		6C5D38381D56F5CB00B78CD9 /* JSPatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 6C5D38171D56F5CB00B78CD9 /* JSPatch.js */; };
 		6C5D383C1D56F74100B78CD9 /* JPPlayground.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D383B1D56F74100B78CD9 /* JPPlayground.m */; };
 		6C5D38421D56FD5100B78CD9 /* JPKeyCommands.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D38411D56FD5100B78CD9 /* JPKeyCommands.m */; };
-		6C5D38691D57193400B78CD9 /* JPErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D38681D57193400B78CD9 /* JPErrorView.m */; };
+		6C5D38691D57193400B78CD9 /* JPDevErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D38681D57193400B78CD9 /* JPDevErrorView.m */; };
 		6C5D38781D571F7200B78CD9 /* JPDevMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D38771D571F7200B78CD9 /* JPDevMenu.m */; };
 		6C5D387B1D57237200B78CD9 /* JPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D387A1D57237200B78CD9 /* JPRootViewController.m */; };
+		6C5D387E1D5728D500B78CD9 /* JPDevTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5D387D1D5728D500B78CD9 /* JPDevTipView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -135,12 +136,14 @@
 		6C5D383B1D56F74100B78CD9 /* JPPlayground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPlayground.m; sourceTree = "<group>"; };
 		6C5D38401D56FD5100B78CD9 /* JPKeyCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPKeyCommands.h; sourceTree = "<group>"; };
 		6C5D38411D56FD5100B78CD9 /* JPKeyCommands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPKeyCommands.m; sourceTree = "<group>"; };
-		6C5D38671D57193400B78CD9 /* JPErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPErrorView.h; sourceTree = "<group>"; };
-		6C5D38681D57193400B78CD9 /* JPErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPErrorView.m; sourceTree = "<group>"; };
+		6C5D38671D57193400B78CD9 /* JPDevErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPDevErrorView.h; sourceTree = "<group>"; };
+		6C5D38681D57193400B78CD9 /* JPDevErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPDevErrorView.m; sourceTree = "<group>"; };
 		6C5D38761D571F7200B78CD9 /* JPDevMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPDevMenu.h; sourceTree = "<group>"; };
 		6C5D38771D571F7200B78CD9 /* JPDevMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPDevMenu.m; sourceTree = "<group>"; };
 		6C5D38791D57237200B78CD9 /* JPRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPRootViewController.h; sourceTree = "<group>"; };
 		6C5D387A1D57237200B78CD9 /* JPRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPRootViewController.m; sourceTree = "<group>"; };
+		6C5D387C1D5728D500B78CD9 /* JPDevTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPDevTipView.h; sourceTree = "<group>"; };
+		6C5D387D1D5728D500B78CD9 /* JPDevTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPDevTipView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -377,8 +380,10 @@
 				6C5D383B1D56F74100B78CD9 /* JPPlayground.m */,
 				6C5D38401D56FD5100B78CD9 /* JPKeyCommands.h */,
 				6C5D38411D56FD5100B78CD9 /* JPKeyCommands.m */,
-				6C5D38671D57193400B78CD9 /* JPErrorView.h */,
-				6C5D38681D57193400B78CD9 /* JPErrorView.m */,
+				6C5D38671D57193400B78CD9 /* JPDevErrorView.h */,
+				6C5D38681D57193400B78CD9 /* JPDevErrorView.m */,
+				6C5D387C1D5728D500B78CD9 /* JPDevTipView.h */,
+				6C5D387D1D5728D500B78CD9 /* JPDevTipView.m */,
 				6C5D38761D571F7200B78CD9 /* JPDevMenu.h */,
 				6C5D38771D571F7200B78CD9 /* JPDevMenu.m */,
 			);
@@ -474,11 +479,12 @@
 				6C5D37B01D56F58600B78CD9 /* AppDelegate.m in Sources */,
 				6C5D38261D56F5CB00B78CD9 /* ffi_i386.c in Sources */,
 				6C5D38361D56F5CB00B78CD9 /* JPSpecialInit.m in Sources */,
+				6C5D387E1D5728D500B78CD9 /* JPDevTipView.m in Sources */,
 				6C5D382D1D56F5CB00B78CD9 /* JPCGPath.m in Sources */,
 				6C5D38421D56FD5100B78CD9 /* JPKeyCommands.m in Sources */,
 				6C5D382A1D56F5CB00B78CD9 /* JPCGContext.m in Sources */,
 				6C5D38221D56F5CB00B78CD9 /* types.c in Sources */,
-				6C5D38691D57193400B78CD9 /* JPErrorView.m in Sources */,
+				6C5D38691D57193400B78CD9 /* JPDevErrorView.m in Sources */,
 				6C5D38211D56F5CB00B78CD9 /* raw_api.c in Sources */,
 				6C5D381F1D56F5CB00B78CD9 /* trampoline_armv7.S in Sources */,
 				6C5D381B1D56F5CB00B78CD9 /* ffi_arm64.c in Sources */,

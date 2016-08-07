@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JPErrorView : UIView
+@interface JPDevErrorView : UIView
 
 - (instancetype)initError:(NSString *)errMsg;
 
