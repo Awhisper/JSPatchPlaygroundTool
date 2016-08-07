@@ -82,7 +82,7 @@ bang哥的Playground工程下面，可以看到想要配置这样一个如此酷
 
 __command + X__:可以打开操作菜单
 
-![menu](http://o8n2av4n7.bkt.clouddn.com/jpmenu.jpeg)
+![menu](http://ww2.sinaimg.cn/mw690/678c3e91jw1f6lkzh8zwdj208n0fyaam.jpg)
 
 
 __command + R__:可以ReloadJS
@@ -91,7 +91,7 @@ __command + R__:可以ReloadJS
 
 __JS Error__:当JS文件有错误，app并不会崩溃，保持持续运行，并且弹出红色界面，详细描述错误信息，当把js文件修改正确后，重新reload，自然就会顺利运行。
 
-![error](http://o8n2av4n7.bkt.clouddn.com/jperror.jpeg)
+![error](http://ww2.sinaimg.cn/mw690/678c3e91jw1f6lkzglfruj208n0fyq3t.jpg)
 
 __AutoReload JS__:Tool可以开启监听JS文件的变化，当你把menu中的这个开关打开，每一次修改js文件进行保存，都会自动触发reload。再次点击这个按钮，会关闭监听，（AutoReload默认不开启）
 
