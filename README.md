@@ -1,6 +1,5 @@
 # JSPatchPlaygroundTool
 
-
 JSPatch天然能实现playground黑科技一样的效果，什么样的黑科技呢？我们改的每一行代码，每一个语句，完全无需重新运行app，直接能立刻看到效果。
 
 并且bang哥已经给出了如何操作和说明
@@ -11,14 +10,6 @@ JSPatch天然能实现playground黑科技一样的效果，什么样的黑科技
 
 
 ![Screenshot](https://raw.github.com/bang590/JSPatch/master/Demo/iOSPlayground/Screenshot.gif)
-
-## Introduce
-
-JSPatch Playground is an interactive JSPatch coding environment, the iOS simulator will refresh and displays results instantly as js files save.
-
-You can also setup a playground in your own project to use JSPatch build user interface easily.
-
-Tips: if there is error of the script code, the status bar will show the messages, tap the status bar if you want to see more details.
 
 ## 介绍
 
@@ -37,6 +28,8 @@ bang哥的Playground工程下面，可以看到想要配置这样一个如此酷
 由于前些日子搞了一阵子ReactNative，发现ReactNative下面的Debug，Reload工具很是方便，心想也给JSPatch弄一套，于是就有了这个`JSPatchPlaygroundTool`
 
 初衷是，把一整套playground的思路以及环境代码配置，封装成工具，以简洁的API就能轻松运行。
+
+<!--more-->
 
 ## JSPatchPlaygroundTool的使用
 
