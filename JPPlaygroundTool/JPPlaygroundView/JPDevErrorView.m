@@ -18,7 +18,7 @@
     if (self) {
         self.backgroundColor = [UIColor redColor];
         
-        UITextView *text = [[UITextView alloc]initWithFrame:self.bounds];
+        UITextView *text = [[UITextView alloc]initWithFrame:CGRectMake(0, 20, self.bounds.size.width, self.bounds.size.height-20)];
         text.backgroundColor = [UIColor redColor];
         text.textColor = [UIColor whiteColor];
         text.font = [UIFont systemFontOfSize:20];

@@ -38,6 +38,7 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
 
 + (instancetype)sharedInstance
 {
+#if TARGET_IPHONE_SIMULATOR
     static JPPlayground *sharedInstance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -45,16 +46,21 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     });
     
     return sharedInstance;
+#else
+    return nil;
+#endif
 }
 
 - (instancetype)init
 {
     if ((self = [super init])) {
+#if TARGET_IPHONE_SIMULATOR
         _keyManager = [JPKeyCommands sharedInstance];
         _devMenu = [[JPDevMenu alloc]init];
         _devMenu.delegate = self;
         _isAutoReloading = NO;
         _watchDogs = [[NSMutableArray alloc] init];
+#endif
     }
     return self;
 }
@@ -71,6 +77,7 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
 
 -(void)startPlaygroundWithJSPath:(NSString *)mainScriptPath
 {
+#if TARGET_IPHONE_SIMULATOR
     self.rootPath = mainScriptPath;
     
     NSString *scriptRootPath = [mainScriptPath stringByDeletingLastPathComponent];
@@ -108,7 +115,7 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     }];
     
     [self reload];
-    
+#endif
 }
 
 +(void)reload
@@ -118,17 +125,19 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
 
 -(void)reload
 {
+#if TARGET_IPHONE_SIMULATOR
     [JPDevTipView showJPDevTip:@"JSPatch Reloading ..."];
     [self hideErrorView];
     [JPCleaner cleanAll];
     NSString *script = [NSString stringWithContentsOfFile:self.rootPath encoding:NSUTF8StringEncoding error:nil];
     [JPEngine evaluateScript:script];
     _reloadCompleteHandler();
-    
+#endif
 }
 
 -(void)openInFinder
 {
+#if TARGET_IPHONE_SIMULATOR
     NSLog(@"%@\n",self.rootPath);
     
     NSLog(@"请打开以上路径的文件，事实编辑JS，事实刷新");
@@ -139,12 +148,12 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     [alert show];
     [UIPasteboard generalPasteboard].string = self.rootPath;
     
-//    NSURL *fileUrl = [[NSURL alloc]initFileURLWithPath:self.rootPath];
-//    [[UIApplication sharedApplication]openURL:fileUrl];
+#endif
 }
 
 -(void)watchJSFile:(BOOL)watch
 {
+#if TARGET_IPHONE_SIMULATOR
     for (SGDirWatchdog *dog in self.watchDogs) {
         if (watch) {
             [dog start];
@@ -152,26 +161,31 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
             [dog stop];
         }
     }
-
+#endif
 }
 
 - (void)watchFolder:(NSString *)folderPath mainScriptPath:(NSString *)mainScriptPath
 {
+#if TARGET_IPHONE_SIMULATOR
     SGDirWatchdog *watchDog = [[SGDirWatchdog alloc] initWithPath:folderPath update:^{
         [self reload];
     }];
     [self.watchDogs addObject:watchDog];
+#endif
 }
 
 -(void)hideErrorView
 {
+#if TARGET_IPHONE_SIMULATOR
     [self.errorView removeFromSuperview];
     self.errorView = nil;
+#endif
 }
 
 
 -(void)devMenuDidAction:(JPDevMenuAction)action withValue:(id)value
 {
+#if TARGET_IPHONE_SIMULATOR
     switch (action) {
         case JPDevMenuActionReload:{
             [self reload];
@@ -195,5 +209,6 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
         default:
             break;
     }
+#endif
 }
 @end
