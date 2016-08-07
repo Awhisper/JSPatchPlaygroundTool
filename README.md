@@ -32,7 +32,7 @@ Tips: 如果运行过程中脚本执行错误，会在状态栏里显示错误�
 
 # JSPatchPlaygroundTool
 
-bang哥的Playground工程下面，可以看到想要配置这样一个如此酷炫的黑科技可以看看[JSPatch Playground Github](https://github.com/bang590/JSPatch/tree/master/Demo/iOSPlayground) 项目下的`JPRootViewController.m`文件里面的代码还是挺多的
+bang哥的Playground工程下面，可以看到想要配置这样一个如此酷炫的黑科技，[JSPatch Playground Github](https://github.com/bang590/JSPatch/tree/master/Demo/iOSPlayground) 项目下的`JPRootViewController.m`文件里面的代码还是挺多的
 
 由于前些日子搞了一阵子ReactNative，发现ReactNative下面的Debug，Reload工具很是方便，心想也给JSPatch弄一套，于是就有了这个`JSPatchPlaygroundTool`
 
@@ -82,7 +82,7 @@ bang哥的Playground工程下面，可以看到想要配置这样一个如此酷
 
 __command + X__:可以打开操作菜单
 
-![menu](http://o8n2av4n7.bkt.clouddn.com/jsplaygroundmenu.png)
+![menu](http://o8n2av4n7.bkt.clouddn.com/jpmenu.jpeg)
 
 
 __command + R__:可以ReloadJS
@@ -91,17 +91,17 @@ __command + R__:可以ReloadJS
 
 __JS Error__:当JS文件有错误，app并不会崩溃，保持持续运行，并且弹出红色界面，详细描述错误信息，当把js文件修改正确后，重新reload，自然就会顺利运行。
 
-![error](http://o8n2av4n7.bkt.clouddn.com/jsplaygrounderror.png)
+![error](http://o8n2av4n7.bkt.clouddn.com/jperror.jpeg)
 
-__AutoReload JS__:Tool可以开启监听JS文件的变化，当你把menu中的这个开关打开，每一次修改js文件进行保存，都会自动触发reload。再次点击这个按钮，会关闭监听
+__AutoReload JS__:Tool可以开启监听JS文件的变化，当你把menu中的这个开关打开，每一次修改js文件进行保存，都会自动触发reload。再次点击这个按钮，会关闭监听，（AutoReload默认不开启）
 
-__todo list__:我还想尝试在菜单里面多做2个功能，但并未能找到办法
+__Todo List__:我还想尝试在菜单里面多做2个功能，但并未能找到办法
 
 - 自动打开Finder，打开JS文件所在的目录，从而能快速找到要修改的JS文件，轻轻松松的开始畅快的JS代码之旅，从此告别编译，运行，重启app的烦躁过程
 
 - 自动打开Safari的开发者模式，打开正在run的JSContext，从而能对js代码进行断点调试，就好像ReactNative能自动打开chrome一样
 
-我没有找到很好的办法，能在iOS框架里面，在模拟器里面，打开Mac上的Mac app，太多的方法都是OSX开发才能使用的库，比如`NSWorkSpace`
+我没有找到很好的办法，能在iOS框架里面，在模拟器里面，打开Mac上的Mac app，太多的方法都是OSX开发才能使用的库，比如`NSWorkSpace`，这玩意没法在iOS项目里用。发愁
 
 ## JSPatchPlaygroundTool的目标
 
