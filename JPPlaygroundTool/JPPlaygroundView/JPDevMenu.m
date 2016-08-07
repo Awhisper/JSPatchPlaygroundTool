@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
     // Add built-in items
     
     
-    [items addObject:[JPDevMenuItem buttonItemWithTitle:@"Reload Command+R" handler:^{
+    [items addObject:[JPDevMenuItem buttonItemWithTitle:@"Reload JS (Command+R)" handler:^{
         if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:withValue:)]) {
             [self.delegate devMenuDidAction:JPDevMenuActionReload withValue:nil];
         }
@@ -177,7 +177,7 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
 -(void)show
 {
     UIActionSheet *actionSheet = [UIActionSheet new];
-    actionSheet.title = @"JPatch Playgournd : Command + x";
+    actionSheet.title = @"JPatch Playgournd : Command + X";
     actionSheet.delegate = self;
     
     NSArray<JPDevMenuItem *> *items = [self menuItems];
