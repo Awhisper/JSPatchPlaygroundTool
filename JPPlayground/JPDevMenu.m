@@ -112,11 +112,21 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
 @interface JPDevMenu ()<UIActionSheetDelegate>
 
 @property (nonatomic,strong) UIActionSheet * actionSheet;
+@property (nonatomic,strong) NSMutableDictionary *settings;
 @property (nonatomic,strong) NSArray<JPDevMenuItem *> *presentedItems;
 
 @end
 
 @implementation JPDevMenu
+
+-(instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _settings = [[NSMutableDictionary alloc]init];
+    }
+    return self;
+}
 
 
 - (NSArray<JPDevMenuItem *> *)menuItems
@@ -127,17 +137,25 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
     
     
     [items addObject:[JPDevMenuItem buttonItemWithTitle:@"Reload Command+R" handler:^{
-        if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:)]) {
-            [self.delegate devMenuDidAction:JPDevMenuActionReload];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:withValue:)]) {
+            [self.delegate devMenuDidAction:JPDevMenuActionReload withValue:nil];
         }
     }]];
     
-    [items addObject:[JPDevMenuItem buttonItemWithTitle:@"Hide ErrorView Command+H" handler:^{
-//        [self hideErrorView];
-    }]];
+    JPDevMenuItem *toggle = [JPDevMenuItem toggleItemWithKey:@"autoReloadJS" title:@"open Auto Reload JS" selectedTitle:@"Auto Reload JS Is Open" handler:^(BOOL selected) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:withValue:)]) {
+            [self.delegate devMenuDidAction:JPDevMenuActionAutoReload withValue:@(selected)];
+        }
+        
+    }];
+    toggle.value = _settings[@"autoReloadJS"];
+    [items addObject:toggle];
     
-    [items addObject:[JPDevMenuItem buttonItemWithTitle:@"Show JS in Finder Command+F" handler:^{
-//        [self openInFinder];
+    
+    [items addObject:[JPDevMenuItem buttonItemWithTitle:@"Show JS in Finder" handler:^{
+        if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:withValue:)]) {
+            [self.delegate devMenuDidAction:JPDevMenuActionOpenJS withValue:nil];
+        }
     }]];
     
     
@@ -158,12 +176,6 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
 
 -(void)show
 {
-    
-    if (_actionSheet ) {
-        [_actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
-        return;
-    }
-    
     UIActionSheet *actionSheet = [UIActionSheet new];
     actionSheet.title = @"JPatch Playgournd : Command + x";
     actionSheet.delegate = self;
@@ -186,7 +198,6 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
     [actionSheet addButtonWithTitle:@"Cancel"];
     actionSheet.cancelButtonIndex = actionSheet.numberOfButtons - 1;
     
-    //    actionSheet.actionSheetStyle = UIBarStyleBlack;
     [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
     _actionSheet = actionSheet;
     _presentedItems = items;
@@ -207,19 +218,45 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
             break;
         }
         case JPDevMenuTypeToggle: {
-//            BOOL value = [_settings[item.key] boolValue];
-//            [self updateSetting:item.key value:@(!value)]; // will call handler
+            BOOL value = [_settings[item.key] boolValue];
+            [self updateSetting:item.key value:@(!value)]; // will call handler
             break;
         }
     }
     return;
 }
 
+- (void)updateSetting:(NSString *)name value:(id)value
+{
+    // Fire handler for item whose values has changed
+    for (JPDevMenuItem *item in _presentedItems) {
+        if ([item.key isEqualToString:name]) {
+            if (value != item.value && ![value isEqual:item.value]) {
+                item.value = value;
+                [item callHandler];
+            }
+            break;
+        }
+    }
+    
+    // Save the setting
+    id currentValue = _settings[name];
+    if (currentValue == value || [currentValue isEqual:value]) {
+        return;
+    }
+    if (value) {
+        _settings[name] = value;
+    } else {
+        [_settings removeObjectForKey:name];
+    }
+}
+
+
 
 -(void)actionSheetCancel:(UIActionSheet *)actionSheet
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:)]) {
-        [self.delegate devMenuDidAction:JPDevMenuActionCancel];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:withValue:)]) {
+        [self.delegate devMenuDidAction:JPDevMenuActionCancel withValue:nil];
     }
 }
 

@@ -22,11 +22,21 @@
     
     
     [JPEngine startEngine];
-    NSString *sourcePath = [[NSBundle mainBundle] pathForResource:@"demo" ofType:@"js"];
-    NSString *script = [NSString stringWithContentsOfFile:sourcePath encoding:NSUTF8StringEncoding error:nil];
-    [JPEngine evaluateScript:script];
+    
+//#if TARGET_IPHONE_SIMULATOR
+//    NSString *rootPath = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"projectPath"];
+//#else
+//    NSString *rootPath = [[NSBundle mainBundle] bundlePath];
+//#endif
+    
+    NSString *rootPath = [[NSBundle mainBundle] bundlePath];
 
-    [JPPlayground startPlaygroundWithJSPath:sourcePath];
+    NSString *scriptRootPath = [rootPath stringByAppendingPathComponent:@"js"];
+    NSString *mainScriptPath = [NSString stringWithFormat:@"%@/%@", scriptRootPath, @"demo.js"];
+    
+//    [JPEngine evaluateScriptWithPath:mainScriptPath];
+
+    [JPPlayground startPlaygroundWithJSPath:mainScriptPath];
     [JPPlayground setReloadCompleteHandler:^{
         [self showController];
     }];

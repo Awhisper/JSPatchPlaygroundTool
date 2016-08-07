@@ -17,7 +17,7 @@ typedef enum : NSUInteger {
 
 @protocol JPDevMenuDelegate <NSObject>
 
--(void)devMenuDidAction:(JPDevMenuAction)action;
+-(void)devMenuDidAction:(JPDevMenuAction)action withValue:(id)value;
 
 @end
 
