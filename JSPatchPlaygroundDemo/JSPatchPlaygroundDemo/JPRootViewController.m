@@ -10,6 +10,8 @@
 #import "JPEngine.h"
 #import "JPPlayground.h"
 
+
+
 @interface JPRootViewController ()
 
 @end
@@ -23,25 +25,29 @@
     
     [JPEngine startEngine];
     
-//#if TARGET_IPHONE_SIMULATOR
-//    NSString *rootPath = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"projectPath"];
-//#else
-//    NSString *rootPath = [[NSBundle mainBundle] bundlePath];
-//#endif
     
-    NSString *rootPath = [[NSBundle mainBundle] bundlePath];
-
+#if TARGET_IPHONE_SIMULATOR
+    //playground调试
+    //JS测试包的本地绝对路径
+    NSString *rootPath = @"/Users/Awhisper/Desktop/Github/JSPatchPlaygroundTool/JSPatchPlaygroundDemo/JSPatchPlaygroundDemo";
+    
     NSString *scriptRootPath = [rootPath stringByAppendingPathComponent:@"js"];
     NSString *mainScriptPath = [NSString stringWithFormat:@"%@/%@", scriptRootPath, @"demo.js"];
-    
-//    [JPEngine evaluateScriptWithPath:mainScriptPath];
-
-    [JPPlayground startPlaygroundWithJSPath:mainScriptPath];
     [JPPlayground setReloadCompleteHandler:^{
         [self showController];
     }];
+    [JPPlayground startPlaygroundWithJSPath:mainScriptPath];
     
-    [JPPlayground reload];
+    
+#else
+    //正常执行JSPatch
+    //JS测试包的本地绝对路径
+    NSString *rootPath = [[NSBundle mainBundle] bundlePath];
+    
+    NSString *scriptPath = [rootPath stringByAppendingPathComponent:@"demo.js"];
+    NSString *script = [NSString stringWithContentsOfFile:scriptPath encoding:NSUTF8StringEncoding error:nil];
+    [JPEngine evaluateScript:script];
+#endif
     
     
     

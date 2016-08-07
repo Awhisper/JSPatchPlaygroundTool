@@ -107,6 +107,8 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
         [self reload];
     }];
     
+    [self reload];
+    
 }
 
 +(void)reload
@@ -131,7 +133,9 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     
     NSLog(@"请打开以上路径的文件，事实编辑JS，事实刷新");
     
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Edit JS File" message:@"查看控制台，打开打印出来的路径下的JS文件，实时编辑，实时刷新" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    NSString *msg = [NSString stringWithFormat:@"JS文件路径：%@\n 编辑JS文件后保存，按Command+R刷新就可以看到最新的代码效果",self.rootPath];
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Edit JS File and Reload" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
     [UIPasteboard generalPasteboard].string = self.rootPath;
     
@@ -183,7 +187,7 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
             break;
         }
         case JPDevMenuActionCancel:{
-            
+            [self hideErrorView];
             break;
         }
             

@@ -152,7 +152,7 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
     [items addObject:toggle];
     
     
-    [items addObject:[JPDevMenuItem buttonItemWithTitle:@"Show JS in Finder" handler:^{
+    [items addObject:[JPDevMenuItem buttonItemWithTitle:@"Help" handler:^{
         if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:withValue:)]) {
             [self.delegate devMenuDidAction:JPDevMenuActionOpenJS withValue:nil];
         }
@@ -260,6 +260,11 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
     }
 }
 
-
+-(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:withValue:)]) {
+        [self.delegate devMenuDidAction:JPDevMenuActionCancel withValue:nil];
+    }
+}
 
 @end
