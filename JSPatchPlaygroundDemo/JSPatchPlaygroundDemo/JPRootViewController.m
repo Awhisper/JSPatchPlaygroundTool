@@ -41,7 +41,6 @@
     
 #else
     //正常执行JSPatch
-    //JS测试包的本地绝对路径
     NSString *rootPath = [[NSBundle mainBundle] bundlePath];
     
     NSString *scriptPath = [rootPath stringByAppendingPathComponent:@"demo.js"];
