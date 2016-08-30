@@ -110,6 +110,8 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     id JPEngineClass = (id)NSClassFromString(@"JPEngine");
     if (JPEngineClass && [JPEngineClass respondsToSelector:@selector(handleException:)]) {
         [JPEngineClass performSelector:@selector(handleException:) withObject:exceptionhandler];
+    }else{
+        NSCAssert(NO, @"can't find JPEngine handleException: Method");
     }
     
 //    去掉编译依赖改为运行时call，方便framework&SDK集成
@@ -145,6 +147,8 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     id JPCleanerClass = (id)NSClassFromString(@"JPCleaner");
     if (JPCleanerClass && [JPCleanerClass respondsToSelector:@selector(cleanAll)]) {
         [JPCleanerClass performSelector:@selector(cleanAll)];
+    }else{
+        NSCAssert(NO, @"can't find JPCleaner cleanAll Method");
     }
 //    [JPCleaner cleanAll];//去掉编译依赖改为运行时call，方便framework&SDK集成
     NSString *script = [NSString stringWithContentsOfFile:self.rootPath encoding:NSUTF8StringEncoding error:nil];
@@ -152,6 +156,8 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     id JPEngineClass = (id)NSClassFromString(@"JPEngine");
     if (JPEngineClass && [JPEngineClass respondsToSelector:@selector(evaluateScript:)]) {
         [JPEngineClass performSelector:@selector(evaluateScript:) withObject:script];
+    }else{
+        NSCAssert(NO, @"can't find JPEngine evaluateScript: Method");
     }
 //    [JPEngine evaluateScript:script];//去掉编译依赖改为运行时call，方便framework&SDK集成
     _reloadCompleteHandler();
@@ -167,9 +173,12 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     
     NSString *msg = [NSString stringWithFormat:@"JS文件路径：%@\n 编辑JS文件后保存，按Command+R刷新就可以看到最新的代码效果",self.rootPath];
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Edit JS File and Reload" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
     [UIPasteboard generalPasteboard].string = self.rootPath;
+#pragma clang diagnostic pop
     
 #endif
 }
