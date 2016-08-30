@@ -8,7 +8,8 @@
 
 #import "JPPlayground.h"
 #import "JPKeyCommands.h"
-#import "JPCleaner.h"
+//#import "JPEngine.h"
+//#import "JPCleaner.h"
 #import "JPDevErrorView.h"
 #import "JPDevMenu.h"
 #import "JPDevTipView.h"
@@ -35,6 +36,9 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
 };
 
 @implementation JPPlayground
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
 
 + (instancetype)sharedInstance
 {
@@ -97,14 +101,24 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
             [self watchFolder:fullPath mainScriptPath:mainScriptPath];
         }
     }
-    
-    
-    [JPEngine handleException:^(NSString *msg) {
+    void(^exceptionhandler)(NSString *msg) = ^(NSString *msg){
         JPDevErrorView *errV = [[JPDevErrorView alloc]initError:msg];
         [[UIApplication sharedApplication].keyWindow addSubview:errV];
         self.errorView = errV;
         [self.devMenu toggle];
-    }];
+    };
+    id JPEngineClass = (id)NSClassFromString(@"JPEngine");
+    if (JPEngineClass && [JPEngineClass respondsToSelector:@selector(handleException:)]) {
+        [JPEngineClass performSelector:@selector(handleException:) withObject:exceptionhandler];
+    }
+    
+//    去掉编译依赖改为运行时call，方便framework&SDK集成
+//    [JPEngine handleException:^(NSString *msg) {
+//        JPDevErrorView *errV = [[JPDevErrorView alloc]initError:msg];
+//        [[UIApplication sharedApplication].keyWindow addSubview:errV];
+//        self.errorView = errV;
+//        [self.devMenu toggle];
+//    }];
     
     [self.keyManager registerKeyCommandWithInput:@"x" modifierFlags:UIKeyModifierCommand action:^(UIKeyCommand *command) {
         [self.devMenu toggle];
@@ -128,9 +142,18 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
 #if TARGET_IPHONE_SIMULATOR
     [JPDevTipView showJPDevTip:@"JSPatch Reloading ..."];
     [self hideErrorView];
-    [JPCleaner cleanAll];
+    id JPCleanerClass = (id)NSClassFromString(@"JPCleaner");
+    if (JPCleanerClass && [JPCleanerClass respondsToSelector:@selector(cleanAll)]) {
+        [JPCleanerClass performSelector:@selector(cleanAll)];
+    }
+//    [JPCleaner cleanAll];//去掉编译依赖改为运行时call，方便framework&SDK集成
     NSString *script = [NSString stringWithContentsOfFile:self.rootPath encoding:NSUTF8StringEncoding error:nil];
-    [JPEngine evaluateScript:script];
+    
+    id JPEngineClass = (id)NSClassFromString(@"JPEngine");
+    if (JPEngineClass && [JPEngineClass respondsToSelector:@selector(evaluateScript:)]) {
+        [JPEngineClass performSelector:@selector(evaluateScript:) withObject:script];
+    }
+//    [JPEngine evaluateScript:script];//去掉编译依赖改为运行时call，方便framework&SDK集成
     _reloadCompleteHandler();
 #endif
 }
@@ -211,4 +234,6 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     }
 #endif
 }
+
+#pragma clang diagnostic pop
 @end
