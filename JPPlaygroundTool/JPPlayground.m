@@ -8,8 +8,6 @@
 
 #import "JPPlayground.h"
 #import "JPKeyCommands.h"
-//#import "JPEngine.h"
-//#import "JPCleaner.h"
 #import "JPDevErrorView.h"
 #import "JPDevMenu.h"
 #import "JPDevTipView.h"
@@ -114,14 +112,6 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
         NSCAssert(NO, @"can't find JPEngine handleException: Method");
     }
     
-//    去掉编译依赖改为运行时call，方便framework&SDK集成
-//    [JPEngine handleException:^(NSString *msg) {
-//        JPDevErrorView *errV = [[JPDevErrorView alloc]initError:msg];
-//        [[UIApplication sharedApplication].keyWindow addSubview:errV];
-//        self.errorView = errV;
-//        [self.devMenu toggle];
-//    }];
-    
     [self.keyManager registerKeyCommandWithInput:@"x" modifierFlags:UIKeyModifierCommand action:^(UIKeyCommand *command) {
         [self.devMenu toggle];
     }];
@@ -150,7 +140,7 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     }else{
         NSCAssert(NO, @"can't find JPCleaner cleanAll Method");
     }
-//    [JPCleaner cleanAll];//去掉编译依赖改为运行时call，方便framework&SDK集成
+    
     NSString *script = [NSString stringWithContentsOfFile:self.rootPath encoding:NSUTF8StringEncoding error:nil];
     
     id JPEngineClass = (id)NSClassFromString(@"JPEngine");
@@ -159,7 +149,7 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     }else{
         NSCAssert(NO, @"can't find JPEngine evaluateScript: Method");
     }
-//    [JPEngine evaluateScript:script];//去掉编译依赖改为运行时call，方便framework&SDK集成
+    
     _reloadCompleteHandler();
 #endif
 }
