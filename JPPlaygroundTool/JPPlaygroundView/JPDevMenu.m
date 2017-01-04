@@ -265,7 +265,7 @@ typedef NS_ENUM(NSInteger, JPDevMenuType) {
 
 -(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:withValue:)]) {
+    if ([self menuItems].count == buttonIndex && self.delegate && [self.delegate respondsToSelector:@selector(devMenuDidAction:withValue:)]) {
         [self.delegate devMenuDidAction:JPDevMenuActionCancel withValue:nil];
     }
 }
