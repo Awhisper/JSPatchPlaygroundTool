@@ -19,6 +19,8 @@
 
 @property (nonatomic,strong) JPKeyCommands *keyManager;
 
+@property(nonatomic, strong) UIWindow *errorWindow;
+
 @property (nonatomic,strong) UIView *errorView;
 
 @property (nonatomic,strong) JPDevMenu *devMenu;
@@ -101,7 +103,9 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
     }
     void(^exceptionhandler)(NSString *msg) = ^(NSString *msg){
         JPDevErrorView *errV = [[JPDevErrorView alloc]initError:msg];
-        [[UIApplication sharedApplication].keyWindow addSubview:errV];
+        [self.errorWindow addSubview:errV];
+        self.errorWindow.hidden = NO;
+        
         self.errorView = errV;
         [self.devMenu toggle];
     };
@@ -201,6 +205,7 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
 #if TARGET_IPHONE_SIMULATOR
     [self.errorView removeFromSuperview];
     self.errorView = nil;
+    self.errorWindow.hidden = YES;
 #endif
 }
 
@@ -232,6 +237,16 @@ static void (^_reloadCompleteHandler)(void) = ^void(void) {
             break;
     }
 #endif
+}
+
+- (UIWindow *)errorWindow {
+    if (!_errorWindow) {
+        _errorWindow = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 20)];
+        _errorWindow.windowLevel = UIWindowLevelStatusBar + 1.0f;
+        _errorWindow.backgroundColor = [UIColor blackColor];
+        [_errorWindow makeKeyAndVisible];
+    }
+    return _errorWindow;
 }
 
 #pragma clang diagnostic pop
